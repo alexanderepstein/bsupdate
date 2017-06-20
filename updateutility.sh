@@ -19,11 +19,11 @@ grep() {
 }
 
 if [[ $currentVersion == "" || $repositoryName == "" || $githubUserName == "" ]];then
-  echo "Error: update utility has not been configured correctly."
+  echo "Error: update utility has not been configured correctly." >&2
   exit 1
 
 elif [[ $(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags) == "" ]];then
-   echo "Error: no active internet connection"
+   echo "Error: no active internet connection" >&2
    exit 1
 else
  latestVersion=$(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Eo '"name":.*?[^\\]",'| head -1 | cut "-c11-$versionReleaseLen") #to grab the v in your updates change -c11 to -c10
