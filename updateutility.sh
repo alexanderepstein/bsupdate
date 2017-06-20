@@ -34,7 +34,7 @@ if [[ $(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tag
 rm -r $repositoryName  2> /dev/null
 git clone https://github.com/$githubUserName/$repositoryName || { echo "Couldn't download latest version" ; exit 1; }
 cd $repositoryName ||  { echo 'Update Failed' ; exit 1 ;}
-git checkout $latestVersion 2> /dev/null
+git checkout v$latestVersion 2> /dev/null
 #chmod +x install.sh #this might be necessary in your case but wasnt in mine.
 ./install.sh
 cd ..
