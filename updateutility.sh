@@ -18,12 +18,14 @@ grep() {
    esac
 }
 
+if [[ $currentVersion == "" || $repositoryName == "" || $githubUserName == "" ]];then
+  echo "Error: update utility has not been configured correctly."
+  exit 1
 
-
-if [[ $(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags) == "" ]];then
+elif [[ $(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags) == "" ]];then
    echo "Error: no active internet connection"
    exit 1
- fi
+else
  latestVersion=$(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Po '"name":.*?[^\\]",'| head -1 | cut -c11-$versionReleaseLen)
  if [[ "$latestVersion" != "$currentVersion"  && "$latestVersion" != "" ]]; then
    echo "Version $latestVersion available"
@@ -45,4 +47,5 @@ rm -r $repositoryName #might need to add sudo to this command depending on type 
 
 else
  echo "$repositoryName is already the latest version"
+fi
 fi
