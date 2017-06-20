@@ -1,11 +1,14 @@
 <div align="center">
 
-# <img src="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Terminal-Pc-104-icon.png"  width:50 height:50 </img> bsupdate (Bash Script Update) <img src="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Terminal-Pc-104-icon.png"  width:50 height:50 </img>
+# <img src="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Terminal-Pc-104-icon.png"  height="50px" width="50px" >bsupdate<img src="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Terminal-Pc-104-icon.png"  height="50px" width="50px" >
+
+### (Bash Script Update)
 #### A drop in bash script that can be added to any bash application/CLI to automate updating
 
 If you have a bash application/script that has an installer script and you host the project on github this script can automate updating.
 
 </div>
+
 ## Usage
 * First clone the repository. ```git clone https://github.com/alexanderepstein/bsupdate```
 * Git checkout to the latest stable version ```git checkout v1.0.1 ```
