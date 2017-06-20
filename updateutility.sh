@@ -9,14 +9,6 @@ versionReleaseLen=$(echo ${#currentVersion})
 versionReleaseLen=$((10 + $versionReleaseLen))
 
 
-grep() {
-  case "$OSTYPE" in
-    darwin*) command ggrep "$@" ;; # gdate is for OSX was installed with coreutils from homebrew
-    linux*)  command grep  "$@" ;; # date is built in
-    *) printf 'Unsupported OS type: %s\n' "$OSTYPE" >&2 # The OS is unsupported let the user know
-       exit 1 ;;
-   esac
-}
 
 if [[ $currentVersion == "" || $repositoryName == "" || $githubUserName == "" ]];then
   echo "Error: update utility has not been configured correctly." >&2

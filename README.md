@@ -20,7 +20,6 @@ If you have a bash application/script that has an installer script and you host 
 * Make sure to check the assumptions section of the README as if these assumptions are not met it will not work without some tinkering
 
 ## Assumptions
-* Inside of the script I use GNU grep if you are on OSX or some other OS that does not have GNU grep look into installing it. On OSX this can be done through homebrew ```brew install grep```
 * Your installer file is titled install.sh and it sits in the root directory of your repository (if not look into changing the installer file call in updateutility.sh)
 * All updates come through the form of github releases. Every github release tag should start with a v and you don't create a release for unstable versions.
 
