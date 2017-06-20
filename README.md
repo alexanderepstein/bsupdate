@@ -1,6 +1,8 @@
 <div align="center">
 
-# <img src="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Terminal-Pc-104-icon.png"  height="50px" width="50px" > bsupdate (Bash Script Update) <img src="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Terminal-Pc-104-icon.png"  height="50px" width="50px" >
+# <img src="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Terminal-Pc-104-icon.png"  height="50px" width="50px" >bsupdate<img src="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Terminal-Pc-104-icon.png"  height="50px" width="50px" >
+
+### (Bash Script Update)
 #### A drop in bash script that can be added to any bash application/CLI to automate updating
 
 If you have a bash application/script that has an installer script and you host the project on github this script can automate updating.
