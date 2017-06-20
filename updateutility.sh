@@ -1,9 +1,23 @@
 #!/bin/bash
+# Author: Alexander Epstein https://github.com/alexanderepstein
+# Update utility version 1.0.0
+
 currentVersion="" #make sure this is the name you give to the tag for the github release. Also make sure to start each realease tag with v as this is an assumption made by the script but do not give this variable a v.Ex variable set to 1.5.0 github release tag is v1.5.0
 repositoryName=""
 githubUserName=""
 versionReleaseLen=$(echo ${#currentVersion})
 versionReleaseLen=$(expr 10 + $versionReleaseLen )
+
+
+grep() {
+  case "$OSTYPE" in
+    darwin*) command ggrep "$@" ;; # gdate is for OSX was installed with coreutils from homebrew
+    linux*)  command grep  "$@" ;; # date is built in
+    *) printf 'Unsupported OS type: %s\n' "$OSTYPE" >&2 # The OS is unsupported let the user know
+       exit 1 ;;
+   esac
+}
+
 
 
 if [[ $(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags) == "" ]];then
