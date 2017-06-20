@@ -6,6 +6,7 @@
 If you have a bash application/script that has an installer script and you host the project on github this script can automate updating.
 
 </div>
+
 ## Usage
 * First clone the repository. ```git clone https://github.com/alexanderepstein/bsupdate```
 * Git checkout to the latest stable version ```git checkout v1.0.0 ```
