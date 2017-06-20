@@ -28,24 +28,24 @@ elif [[ $(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/t
 else
  latestVersion=$(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Eo '"name":.*?[^\\]",'| head -1 | cut "-c11-$versionReleaseLen") #to grab the v in your updates change -c11 to -c10
  if [[ "$latestVersion" != "$currentVersion"  && "$latestVersion" != "" ]]; then
-   echo "Version $latestVersion available"
-   echo -n "Do you wish to update $repositoryName [Y/n]: "
-   read -r answer
- if [[ "$answer" == "Y" || "$answer" == "y" ]] ;then
- cd  ~ || { echo 'Update Failed' ; exit 1 ; }
-rm -r $repositoryName  2> /dev/null
-git clone "https://github.com/$githubUserName/$repositoryName" || { echo "Couldn't download latest version" ; exit 1; }
-cd $repositoryName ||  { echo 'Update Failed' ; exit 1 ;}
-git checkout "v$latestVersion" 2> /dev/null || git checkout "$latestVersion" 2> /dev/null || echo "Couldn't git checkout to stable release, updating to latest commit."
-#chmod +x install.sh #this might be necessary in your case but wasnt in mine.
-./install.sh
-cd ..
-rm -r $repositoryName #might need to add sudo to this command depending on type of application
- else
-     exit 1
- fi
+    echo "Version $latestVersion available"
+    echo -n "Do you wish to update $repositoryName [Y/n]: "
+    read -r answer
+    if [[ "$answer" == "Y" || "$answer" == "y" ]] ;then
+        cd  ~ || { echo 'Update Failed' ; exit 1 ; }
+        rm -r $repositoryName  2> /dev/null
+        git clone "https://github.com/$githubUserName/$repositoryName" || { echo "Couldn't download latest version" ; exit 1; }
+        cd $repositoryName ||  { echo 'Update Failed' ; exit 1 ;}
+        git checkout "v$latestVersion" 2> /dev/null || git checkout "$latestVersion" 2> /dev/null || echo "Couldn't git checkout to stable release, updating to latest commit."
+        #chmod +x install.sh #this might be necessary in your case but wasnt in mine.
+        ./install.sh
+        cd ..
+        rm -r $repositoryName #might need to add sudo to this command depending on type of application
+    else
+         exit 1
+    fi
 
-else
- echo "$repositoryName is already the latest version"
-fi
+  else
+    echo "$repositoryName is already the latest version"
+  fi
 fi
