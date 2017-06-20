@@ -1,6 +1,6 @@
 #!/bin/bash
 # Author: Alexander Epstein https://github.com/alexanderepstein
-# Update utility version 1.0.0
+# Update utility version 1.0.1
 
 currentVersion="" #make sure this is the name you give to the tag for the github release. Also make sure to start each realease tag with v as this is an assumption made by the script but do not give this variable a v.Ex variable set to 1.5.0 github release tag is v1.5.0
 repositoryName=""
