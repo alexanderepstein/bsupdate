@@ -1,6 +1,6 @@
 #!/bin/bash
 # Author: Alexander Epstein https://github.com/alexanderepstein
-# Update utility version 1.1.0
+# Update utility version 1.1.1
 # To test the tool enter in the defualt values that are in the examples for each variable
 currentVersion="" #This version variable should not have a v but should contain all other characters ex Github release tag is v1.2.4 currentVersion is 1.2.4
 repositoryName="" #Name of repostiory to be updated ex. Sandman-Lite
