@@ -11,7 +11,6 @@ latestVersion=$(curl -s https://api.github.com/repos/$githubUserName/$repository
 if [[ $currentVersion == "" || $repositoryName == "" || $githubUserName == "" || $nameOfInstallFile == "" ]];then
   echo "Error: update utility has not been configured correctly." >&2
   exit 1
-
 elif [[ $latestVersion == "" ]];then
   echo "Error: no active internet connection" >&2
   exit 1
@@ -34,7 +33,6 @@ else
     else
       exit 1
     fi
-
   else
     echo "$repositoryName is already the latest version"
   fi
