@@ -11,7 +11,7 @@ If you have a bash application/script that has an installer script and you host 
 
 ## Usage
 * First clone the repository. ```git clone https://github.com/alexanderepstein/bsupdate```
-* Git checkout to the latest stable version ```git checkout v1.0.2 ```
+* Git checkout to the latest stable version ```git checkout v1.1.0```
 * Then edit the update utility.sh file located in the repository and change the variables at the top of the file to configure your updates. Read the comments on the variables to make sure that you do this correctly
 * Run chmod on the updateutility.sh file to make it executable ```chmod a+x updateutility.sh```
 * Copy the file over to the root directory of your project
@@ -66,6 +66,9 @@ function update()
 }
 ```
 Then use either one of the above examples but instead of calling ```./updateutility.sh``` just call ```update```
+
+## But you update this repository so how do I automate updating the updater?
+There is no quick way to do this as the updater requires information from the user so it cannot just replace the code without having access to these variables. I could workaround around this by having two files, but that would make it harder for the end user to implement whereas this is supposed to be simple to setup.
 
 ## Donate
 If this project helped you in any way and you feel like buying a broke college kid a cup of coffee
