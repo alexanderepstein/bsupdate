@@ -16,7 +16,7 @@ elif [[ $(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/t
   echo "Error: no active internet connection" >&2
   exit 1
 else
-  latestVersion=$(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Eo '"name":.*?[^\\]",'| head -1 | grep -Eo "[0-9].[0-9].*[0-9]*\b" ) #always grabs the tag without the v option
+  latestVersion=$(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Eo '"name":.*?[^\\]",'| head -1 | grep -Eo "[0-9.]+" ) #always grabs the tag without the v option
   if [[ "$latestVersion" != "$currentVersion"  && "$latestVersion" != "" ]]; then
     echo "Version $latestVersion available"
     echo -n "Do you wish to update $repositoryName [Y/n]: "
