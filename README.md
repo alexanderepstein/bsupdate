@@ -7,6 +7,8 @@
 
 If you have a bash application/script that has an installer script and you host the project on github this script can automate updating.
 
+![Usage](https://media.giphy.com/media/xUPGcszQZQWbPn4d8I/giphy.gif)
+
 </div>
 
 ## Usage
