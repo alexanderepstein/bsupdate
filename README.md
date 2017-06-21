@@ -59,7 +59,14 @@ if [[ "$1" == "--update" || "$1" == "-u" ]]; then
 	exit 0
 fi
 ```
-
+#### If you want to circumvent adding the file to your code you can just copy paste the code (after cloning b/c of copy paste issue in browsers w/ code) and make it a function called update at the top of the file
+``` bash
+function update()
+{
+  #copy paste the code right here
+}
+```
+Then use either one of the above examples but instead of calling ```./updateutility.sh``` just call ```update``` 
 ## Donate
 If this project helped you in any way and you feel like buying a broke college kid a cup of coffee
 
