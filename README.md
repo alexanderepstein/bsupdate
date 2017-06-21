@@ -22,7 +22,8 @@ If you have a bash application/script that has an installer script and you host 
 * Make sure to check the assumptions section of the README as if these assumptions are not met it will not work without some tinkering
 
 ## Assumptions
-* All updates come through the form of github releases. Releases are not created for unstable versions.
+* All updates come through the form of github releases.
+* Releases for unstable versions do not change the number on the version tag but add either a,b,rc to the end. The updater will not consider these as updates to end users.
 
 ## Adding the -u/--update functionality in your script
 
