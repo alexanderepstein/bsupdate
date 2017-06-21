@@ -6,18 +6,17 @@ currentVersion="" #This version variable should not have a v but should contain 
 repositoryName="" #Name of repostiory to be updated ex. Sandman-Lite
 githubUserName="" #username that hosts the repostiory ex. alexanderepstein
 nameOfInstallFile="install.sh" # change this if the installer file has a different name be sure to include file extension if there is one
-
+latestVersion=$(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Eo '"name":.*?[^\\]",'| head -1 | grep -Eo "[0-9.]+" ) #always grabs the tag without the v option
 
 if [[ $currentVersion == "" || $repositoryName == "" || $githubUserName == "" ]];then
   echo "Error: update utility has not been configured correctly." >&2
   exit 1
 
-elif [[ $(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags) == "" ]];then
+elif [[ $latestVersion == "" ]];then
   echo "Error: no active internet connection" >&2
   exit 1
 else
-  latestVersion=$(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Eo '"name":.*?[^\\]",'| head -1 | grep -Eo "[0-9.]+" ) #always grabs the tag without the v option
-  if [[ "$latestVersion" != "$currentVersion"  && "$latestVersion" != "" ]]; then
+  if [[ "$latestVersion" != "$currentVersion" ]]; then
     echo "Version $latestVersion available"
     echo -n "Do you wish to update $repositoryName [Y/n]: "
     read -r answer
