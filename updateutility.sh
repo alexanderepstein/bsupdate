@@ -26,7 +26,7 @@ else
       git clone "https://github.com/$githubUserName/$repositoryName" || { echo "Couldn't download latest version" ; exit 1; }
       cd $repositoryName ||  { echo 'Update Failed' ; exit 1 ;}
       git checkout "v$latestVersion" 2> /dev/null || git checkout "$latestVersion" 2> /dev/null || echo "Couldn't git checkout to stable release, updating to latest commit."
-      #chmod +x install.sh #this might be necessary in your case but wasnt in mine.
+      #chmod a+x install.sh #this might be necessary in your case but wasnt in mine.
       "./$nameOfInstallFile"
       cd ..
       sudo rm -r $repositoryName #defaulting this command to sudo if you know you will already be root (kali linux) this wont be necessary
