@@ -72,7 +72,9 @@ function update()
 Then use either one of the above examples but instead of calling ```./updateutility.sh``` just call ```update```
 
 ## But you update this repository so how do I automate updating the updater?
-There is no quick way to do this as the updater requires information from the user so it cannot just replace the code without having access to these variables. I could workaround around this by having two files, but that would make it harder for the end user to implement whereas this is supposed to be simple to setup.
+There is no quick way to do this as the updater requires information from the user so it cannot just replace the code without having access to these variables.
+I could workaround around this by having two files, but that would make it harder for the end user to implement whereas this is supposed to be simple to setup.
+For now just it would make sense to watch the repository if you use it so that you will be notified for updates to bsupdate and can implement new versions of the updater as you see fit.
 
 ## Donate
 If this project helped you in any way and you feel like buying a broke college kid a cup of coffee
