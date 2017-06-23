@@ -21,15 +21,17 @@ else
     read -r answer
     if [[ "$answer" == "Y" || "$answer" == "y" ]] ;then
       cd  ~ || { echo 'Update Failed' ; exit 1 ; }
-      echo "Your password is required to continue with the update" #echoing this because of the sudo call
-      sudo rm -r $repositoryName  2> /dev/null #defaulting this command to sudo if you know you will already be root (kali linux) this wont be necessary
+      if [[ -d  ~/$repositoryName ]];then
+        echo "Folder existed"
+        rm -r $repositoryName  || { echo "Your password is required to continue with the update" ; sudo rm -r $repositoryName ; } #sudo command only on error
+      fi
       git clone "https://github.com/$githubUserName/$repositoryName" || { echo "Couldn't download latest version" ; exit 1; }
       cd $repositoryName ||  { echo 'Update Failed' ; exit 1 ;}
       git checkout "v$latestVersion" 2> /dev/null || git checkout "$latestVersion" 2> /dev/null || echo "Couldn't git checkout to stable release, updating to latest commit."
       #chmod a+x install.sh #this might be necessary in your case but wasnt in mine.
       "./$nameOfInstallFile"
       cd ..
-      sudo rm -r $repositoryName #defaulting this command to sudo if you know you will already be root (kali linux) this wont be necessary
+      rm -r $repositoryName || sudo rm -r $repositoryName #sudo command only on error
     else
       exit 1
     fi

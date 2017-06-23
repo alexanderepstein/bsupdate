@@ -4,7 +4,7 @@
 
 ### (Bash Script Update)
 #### A lightweight drop in bash script that can be added to any bash application/CLI to automate updating
-##### Less then 3 KB, ~35 lines of code
+##### Less then 3 KB, ~40 lines of code
 
 If you have a bash application/script that has an installer script and you host the project on github this script can automate updating.
 
