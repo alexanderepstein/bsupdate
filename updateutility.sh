@@ -1,38 +1,80 @@
 #!/bin/bash
 # Author: Alexander Epstein https://github.com/alexanderepstein
-# Update utility version 1.2.0
+# Update utility version 2.0.0
 # To test the tool enter in the defualt values that are in the examples for each variable
 currentVersion="" #This version variable should not have a v but should contain all other characters ex Github release tag is v1.2.4 currentVersion is 1.2.4
 repositoryName="" #Name of repostiory to be updated ex. Sandman-Lite
 githubUserName="" #username that hosts the repostiory ex. alexanderepstein
 nameOfInstallFile="install.sh" # change this if the installer file has a different name be sure to include file extension if there is one
-latestVersion=$(curl -s https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Eo '"name":.*?[^\\]",'| head -1 | grep -Eo "[0-9.]+" ) #always grabs the tag without the v option
 
-if [[ $currentVersion == "" || $repositoryName == "" || $githubUserName == "" || $nameOfInstallFile == "" ]];then
+
+## This function determines which http get tool the system has installed and returns an error if there isnt one
+getConfiguredClient()
+{
+    if  command -v curl &>/dev/null ; then
+      configuredClient="curl"
+    elif command -v wget &>/dev/null ; then
+      configuredClient="wget"
+    elif command -v fetch &>/dev/null ; then
+      configuredClient="fetch"
+    else
+      echo "Error: This tool reqires either curl, wget, or fetch to be installed."
+      return 1
+    fi
+
+}
+
+## Allows to call the users configured client without if statements everywhere
+httpGet()
+{
+  case "$configuredClient" in
+    curl) curl -A curl -s "$@";;
+    wget) wget -qO- "$@";;
+    fetch) fetch -o "...";;
+  esac
+}
+
+update()
+{
+if [[ $currentVersion == "" || $repositoryName == "" || $githubUserName == "" || $nameOfInstallFile == ""  || $latestVersion == "" ]];then
   echo "Error: update utility has not been configured correctly." >&2
-  exit 1
-elif [[ $latestVersion == "" ]];then
-  echo "Error: no active internet connection" >&2
-  exit 1
+  return 1
 else
   if [[ "$latestVersion" != "$currentVersion" ]]; then
     echo "Version $latestVersion available"
     echo -n "Do you wish to update $repositoryName [Y/n]: "
     read -r answer
     if [[ "$answer" == "Y" || "$answer" == "y" ]] ;then
-      cd  ~ || { echo 'Update Failed' ; exit 1 ; }
-      if [[ -d  ~/$repositoryName ]]; then rm -r -f $repositoryName  || { echo "Your password is required to continue with the update" ; sudo rm -r -f $repositoryName ; }; fi #sudo command only on error
-      git clone "https://github.com/$githubUserName/$repositoryName" || { echo "Couldn't download latest version" ; exit 1; }
-      cd $repositoryName ||  { echo 'Update Failed' ; exit 1 ;}
+      cd  ~ || { echo 'Update Failed' ; return 1 ; }
+      if [[ -d  ~/$repositoryName ]]; then rm -r -f $repositoryName  || { echo "Error: permissions denied deleting old clone, try running thr update as sudo" ; return 1 ; }; fi
+      git clone "https://github.com/$githubUserName/$repositoryName" || { echo "Couldn't download latest version" ; return 1; }
+      cd $repositoryName ||  { echo 'Update Failed' ; return 1 ;}
       git checkout "v$latestVersion" 2> /dev/null || git checkout "$latestVersion" 2> /dev/null || echo "Couldn't git checkout to stable release, updating to latest commit."
       #chmod a+x install.sh #this might be necessary in your case but wasnt in mine.
-      "./$nameOfInstallFile"
+      "./$nameOfInstallFile" || return 1 # could echo error here about sudo but I assume you handle errors in your own script correctly
       cd ..
-      rm -r -f $repositoryName || sudo rm -r -f $repositoryName #sudo command only on error
+      rm -r -f $repositoryName || { echo "Error: successfully updated but couldn't delete temperary files at ~/$repositoryName"; return 1; }
     else
-      exit 1
+      return 1
     fi
   else
     echo "$repositoryName is already the latest version"
   fi
 fi
+}
+
+checkInternet()
+{
+  echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1 # query google with a get request
+  if [ $? -eq 0 ]; then #check if the output is 0, if so no errors have occured and we have connected to google successfully
+    return 0
+  else
+    echo "Error: no active internet connection" >&2 #sent to stderr
+    return 1
+  fi
+}
+
+checkInternet || exit 1
+getConfiguredClient || exit 1
+latestVersion=$(httpGet https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Eo '"name":.*?[^\\]",'| head -1 | grep -Eo "[0-9.]+" ) #always grabs the tag without the v option
+update || exit 1

@@ -4,7 +4,7 @@
 
 ### (Bash Script Update)
 #### A lightweight drop in bash script that can be added to any bash application/CLI to automate updating
-##### Less then 3 KB, ~40 lines of code
+##### Less then 4 KB
 
 If you have a bash application/script that has an installer script and you host the project on github this script can automate updating.
 
@@ -14,7 +14,7 @@ If you have a bash application/script that has an installer script and you host 
 
 ## Usage
 * First clone the repository. ```git clone https://github.com/alexanderepstein/bsupdate```
-* Git checkout to the latest stable version ```git checkout v1.2.0```
+* Git checkout to the latest stable version ```git checkout v2.0.0```
 * Then edit the update utility.sh file located in the repository and change the variables at the top of the file to configure your updates. Read the comments on the variables to make sure that you do this correctly
 * Run chmod on the updateutility.sh file to make it executable ```chmod a+x updateutility.sh```
 * Copy the file over to the root directory of your project
@@ -32,7 +32,7 @@ If you have a bash application/script that has an installer script and you host 
 
 #### If you are already using bash options this is what adding the -u functionality would look like
 ``` bash
-while getopts ":uvrghts::" opt; do
+while getopts ":uht:" opt; do
   case $opt in
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -62,14 +62,14 @@ if [[ "$1" == "--update" || "$1" == "-u" ]]; then
 	exit 0
 fi
 ```
-#### If you want to circumvent adding the file to your code you can just copy paste the code (after cloning b/c of copy paste issue in browsers w/ code) and make it a function called update at the top of the file
-``` bash
-function update()
-{
-  #copy paste the code right here
-}
+#### If you want to circumvent adding the file to your code you can just copy paste the code (after cloning b/c of copy paste issue in browsers w/ code) into the main script of your CLI
+Then use either one of the above examples but instead of calling ```./updateutility.sh``` just call
+```bash
+checkInternet || exit 1
+getConfiguredClient || exit 1
+latestVersion=$(httpGet https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Eo '"name":.*?[^\\]",'| head -1 | grep -Eo "[0-9.]+" ) #always grabs the tag without the v option
+update || exit 1
 ```
-Then use either one of the above examples but instead of calling ```./updateutility.sh``` just call ```update```
 
 ## But you update this repository so how do I automate updating the updater?
 There is no quick way to do this as the updater requires information from the user so it cannot just replace the code without having access to these variables.
