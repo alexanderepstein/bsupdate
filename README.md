@@ -14,7 +14,7 @@ If you have a bash application/script that has an installer script and you host 
 
 ## Usage
 * First clone the repository. ```git clone https://github.com/alexanderepstein/bsupdate```
-* Git checkout to the latest stable version ```git checkout v2.0.0```
+* Git checkout to the latest stable version ```git checkout v2.1.0```
 * Then edit the update utility.sh file located in the repository and change the variables at the top of the file to configure your updates. Read the comments on the variables to make sure that you do this correctly
 * Run chmod on the updateutility.sh file to make it executable ```chmod a+x updateutility.sh```
 * Copy the file over to the root directory of your project
@@ -65,8 +65,8 @@ fi
 #### If you want to circumvent adding the file to your code you can just copy paste the code (after cloning b/c of copy paste issue in browsers w/ code) into the main script of your CLI
 Then use either one of the above examples but instead of calling ```./updateutility.sh``` just call
 ```bash
-checkInternet || exit 1
 getConfiguredClient || exit 1
+checkInternet || exit 1
 latestVersion=$(httpGet https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Eo '"name":.*?[^\\]",'| head -1 | grep -Eo "[0-9.]+" ) #always grabs the tag without the v option
 update || exit 1
 ```
