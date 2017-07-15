@@ -1,6 +1,6 @@
 #!/bin/bash
 # Author: Alexander Epstein https://github.com/alexanderepstein
-# Update utility version 2.0.0
+# Update utility version 2.1.0
 # To test the tool enter in the defualt values that are in the examples for each variable
 currentVersion="" #This version variable should not have a v but should contain all other characters ex Github release tag is v1.2.4 currentVersion is 1.2.4
 repositoryName="" #Name of repostiory to be updated ex. Sandman-Lite
@@ -65,16 +65,11 @@ fi
 
 checkInternet()
 {
-  echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1 # query google with a get request
-  if [ $? -eq 0 ]; then #check if the output is 0, if so no errors have occured and we have connected to google successfully
-    return 0
-  else
-    echo "Error: no active internet connection" >&2 #sent to stderr
-    return 1
-  fi
+  httpGet google.com > /dev/null 2>&1 || { echo "Error: no active internet connection" >&2; return 1; } # query google with a get request
 }
 
-checkInternet || exit 1
+
 getConfiguredClient || exit 1
+checkInternet || exit 1
 latestVersion=$(httpGet https://api.github.com/repos/$githubUserName/$repositoryName/tags | grep -Eo '"name":.*?[^\\]",'| head -1 | grep -Eo "[0-9.]+" ) #always grabs the tag without the v option
 update || exit 1
