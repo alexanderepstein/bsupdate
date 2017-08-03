@@ -11,26 +11,28 @@ nameOfInstallFile="install.sh" # change this if the installer file has a differe
 ## This function determines which http get tool the system has installed and returns an error if there isnt one
 getConfiguredClient()
 {
-    if  command -v curl &>/dev/null ; then
-      configuredClient="curl"
-    elif command -v wget &>/dev/null ; then
-      configuredClient="wget"
-    elif command -v fetch &>/dev/null ; then
-      configuredClient="fetch"
-    else
-      echo "Error: This tool reqires either curl, wget, or fetch to be installed."
-      return 1
-    fi
-
+  if  command -v curl &>/dev/null; then
+    configuredClient="curl"
+  elif command -v wget &>/dev/null; then
+    configuredClient="wget"
+  elif command -v http &>/dev/null; then
+    configuredClient="httpie"
+  elif command -v fetch &>/dev/null; then
+    configuredClient="fetch"
+  else
+    echo "Error: This tool reqires either curl, wget, httpie or fetch to be installed\." >&2
+    return 1
+  fi
 }
 
 ## Allows to call the users configured client without if statements everywhere
 httpGet()
 {
   case "$configuredClient" in
-    curl) curl -A curl -s "$@";;
-    wget) wget -qO- "$@";;
-    fetch) fetch -o "...";;
+    curl)  curl -A curl -s "$@" ;;
+    wget)  wget -qO- "$@" ;;
+    httpie) http -b GET "$@" ;;
+    fetch) fetch -o "..." ;;
   esac
 }
 
