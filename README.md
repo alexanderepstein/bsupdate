@@ -14,7 +14,7 @@ If you have a bash application/script that has an installer script and you host 
 
 ## Usage
 * First clone the repository. ```git clone https://github.com/alexanderepstein/bsupdate```
-* Git checkout to the latest stable version ```git checkout v2.1.0```
+* Git checkout to the latest stable version ```git checkout v2.2.0```
 * Then edit the update utility.sh file located in the repository and change the variables at the top of the file to configure your updates. Read the comments on the variables to make sure that you do this correctly
 * Run chmod on the updateutility.sh file to make it executable ```chmod a+x updateutility.sh```
 * Copy the file over to the root directory of your project
